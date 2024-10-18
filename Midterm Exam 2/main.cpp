@@ -121,7 +121,7 @@ void simulate_coffee_shop() { // Simulate the coffee shop operations for 20 minu
     string names[100];
     int nameCount;
     load_names(names, nameCount);  // Load available names
-
+    
     // Add 5 customers to the line
     cout << "Store opens:\n";
     for (int i = 0; i < 5; ++i) {
@@ -131,3 +131,50 @@ void simulate_coffee_shop() { // Simulate the coffee shop operations for 20 minu
     }
     cout << "Resulting line: ";
     line.print();
+    
+    for (int minute = 1; minute <= 20; ++minute) { // Run  20 minutes
+        cout << "\nTime step #" << minute << ":\n";
+
+        // 40% chance a customer is served
+        if (rand() % 100 < 40 && !line.empty()) {
+            cout << line.front() << " is served\n";
+            line.pop_front();
+        }
+
+        // 60% chance a new customer joins the line
+        if (rand() % 100 < 60) {
+            string customer = names[rand() % nameCount];
+            cout << customer << " joins the line\n";
+            line.push_back(customer);
+        }
+
+        // 20% chance the last customer leaves
+        if (rand() % 100 < 20 && !line.empty()) {
+            cout << line.back() << " (at the rear) left the line\n";
+            line.pop_back();
+        }
+
+        // 10% chance any random customer leaves
+        if (rand() % 100 < 10 && !line.empty()) {
+            string randomCustomer = names[rand() % nameCount];
+            cout << randomCustomer << " left the line\n";
+            line.remove(randomCustomer);
+        }
+
+        // 10% chance a VIP customer joins the front
+        if (rand() % 100 < 10) {
+            string vipCustomer = names[rand() % nameCount];
+            cout << vipCustomer << " (VIP) joins the front of the line\n";
+            line.push_front(vipCustomer);
+        }
+        
+        cout << "Resulting line: ";
+        line.print();//print the current line
+    }
+}
+
+int main() {
+    simulate_coffee_shop();
+    return 0;
+}
+    
