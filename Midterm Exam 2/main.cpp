@@ -98,7 +98,7 @@ public:
         void print() const {// Print the current line
             Node* temp = head;
             while (temp) {
-                cout << temp->name << " ";
+                cout << "\n" << temp->name;
                 temp = temp->next;
             }
             cout << endl;
