@@ -67,4 +67,67 @@ public:
             head = newNode;
         }
     }
+    
+    void remove(const string& name) {// Remove a specific person by name
+            Node* temp = head;
+            while (temp && temp->name != name) {
+                temp = temp->next;
+            }
+            if (!temp) return;
+            if (temp->prev) temp->prev->next = temp->next;
+            else head = temp->next;
+            if (temp->next) temp->next->prev = temp->prev;
+            else tail = temp->prev;
+            delete temp;
+        }
 
+        bool empty() const { //see if the line is empty
+            return head == nullptr;
+        }
+
+        string front() const {// Get the name of the person at the front
+            if (head) return head->name;
+            return "";
+        }
+
+        string back() const {// Get the name of the person at the back
+            if (tail) return tail->name;
+            return "";
+        }
+
+        void print() const {// Print the current line
+            Node* temp = head;
+            while (temp) {
+                cout << temp->name << " ";
+                temp = temp->next;
+            }
+            cout << endl;
+        }
+    };
+
+    
+void load_names(string names[], int& size) {
+        ifstream file("names.txt");
+        size = 0;
+        while (file >> names[size]) {
+            size++;
+        }
+    }
+
+
+void simulate_coffee_shop() { // Simulate the coffee shop operations for 20 minutes
+    srand(time(0));
+    DoublyLinkedList line;
+    string names[100];
+    int nameCount;
+    load_names(names, nameCount);  // Load available names
+
+    // Add 5 customers to the line
+    cout << "Store opens:\n";
+    for (int i = 0; i < 5; ++i) {
+        string customer = names[rand() % nameCount];
+        cout << customer << " joins the line\n";
+        line.push_back(customer);
+    }
+    cout << "Resulting line: ";
+    line.print();
