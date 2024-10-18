@@ -112,11 +112,12 @@ void load_names(string names[], int& size) {
         while (file >> names[size]) {
             size++;
         }
+        file.close();
     }
 
 
+
 void simulate_coffee_shop() { // Simulate the coffee shop operations for 20 minutes
-    srand(time(0));
     DoublyLinkedList line;
     string names[100];
     int nameCount;
@@ -174,6 +175,7 @@ void simulate_coffee_shop() { // Simulate the coffee shop operations for 20 minu
 }
 
 int main() {
+    srand(static_cast<unsigned int>(time(0)));
     simulate_coffee_shop();
     return 0;
 }
